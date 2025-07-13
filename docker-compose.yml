@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  app:
+    image: laravelsail/php83-composer
+    container_name: youhub_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - mysql
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  mysql:
+    image: mysql:8.0
+    container_name: youhub_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: youhub
+      MYSQL_USER: youhubuser
+      MYSQL_PASSWORD: youhubsecret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: youhub_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: rootsecret
+
+volumes:
+  db_data:
