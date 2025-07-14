@@ -6,10 +6,18 @@
         @vite("resources/css/app.css")
         @livewireStyles
     </head>
-    <body class="p-5">
-        @livewire("navbar")
+    <body>
+        <div class="flex flex-col p-5">
+            @livewire("navbar")
 
-        {{ $slot }}
+            <div class="flex">
+                @livewire("sidebar")
+
+                <div class="flex-1">
+                    {{ $slot }}
+                </div>
+            </div>
+        </div>
 
         @livewireScripts
     </body>
