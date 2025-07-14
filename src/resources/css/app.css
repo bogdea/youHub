@@ -8,3 +8,7 @@
 body {
     font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
 }
+
+@theme {
+    --color-primary: #1e90ff;
+}

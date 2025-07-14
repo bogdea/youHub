@@ -6,7 +6,9 @@
         @vite("resources/css/app.css")
         @livewireStyles
     </head>
-    <body>
+    <body class="p-5">
+        @livewire("navbar")
+
         {{ $slot }}
 
         @livewireScripts
