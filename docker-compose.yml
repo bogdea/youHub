@@ -1,40 +1,68 @@
-version: "3.8"
-
 services:
   app:
-    image: laravelsail/php83-composer
-    container_name: youhub_app
-    ports:
-      - "8000:8000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: youhub-app
+    restart: unless-stopped
+    working_dir: /var/www/html
     volumes:
       - ./src:/var/www/html
-    working_dir: /var/www/html
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - youhub
     depends_on:
-      - mysql
-    command: php artisan serve --host=0.0.0.0 --port=8000
+      - db
 
-  mysql:
-    image: mysql:8.0
-    container_name: youhub_db
+  webserver:
+    image: nginx:alpine
+    container_name: youhub-webserver
+    restart: unless-stopped
     ports:
-      - "3306:3306"
+      - "8000:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - youhub
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: youhub
-      MYSQL_USER: youhubuser
-      MYSQL_PASSWORD: youhubsecret
-      MYSQL_ROOT_PASSWORD: rootsecret
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_PASSWORD: user_password
+      MYSQL_USER: laravel_user
     volumes:
-      - db_data:/var/lib/mysql
+      - dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - youhub
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: youhub_phpmyadmin
+    container_name: youhub-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
     ports:
       - "8080:80"
-    environment:
-      PMA_HOST: mysql
-      PMA_USER: root
-      PMA_PASSWORD: rootsecret
+    networks:
+      - youhub
+    depends_on:
+      - db
+
+networks:
+  youhub:
+    driver: bridge
 
 volumes:
-  db_data:
+  dbdata:
+    driver: local

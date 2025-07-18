@@ -11,8 +11,31 @@
         x-show="open"
         @click.away="open = false"
         x-transition
-        class="absolute right-0 top-12 w-48 rounded-lg border border-gray-300 shadow-lg"
+        class="absolute right-0 top-12 w-48 space-y-1 rounded-lg border border-gray-300 p-1 shadow-lg"
     >
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100">your channel</a>
+        @if (Auth::check())
+            <a
+                href="#"
+                class="block rounded-lg px-4 py-2 text-center hover:bg-gray-100"
+            >
+                your channel
+            </a>
+            <form method="POST" action="{{ route("logout") }}">
+                @csrf
+                <button
+                    type="submit"
+                    class="w-full cursor-pointer rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
+                >
+                    log out
+                </button>
+            </form>
+        @else
+            <a
+                href="{{ url("/auth") }}"
+                class="block w-full cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-center text-white transition hover:bg-blue-700"
+            >
+                sign in
+            </a>
+        @endif
     </div>
 </div>
