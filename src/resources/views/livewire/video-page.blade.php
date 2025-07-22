@@ -20,9 +20,16 @@
 
     <div class="my-3 flex justify-between">
         <div class="flex items-center space-x-4">
-            <p>
-                {{ $video->user->username }}
-            </p>
+            <div>
+                <p>
+                    {{ $video->user->username }}
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    {{ $video->user->subscribers->count() }}
+                    {{ $video->user->subscribers->count() == 1 ? "subscriber" : "subscribers" }}
+                </p>
+            </div>
 
             <!-- subscribe -->
             @if (Auth::check() &&Auth::user()->subscriptions->where("subscribed_to_id", $video->user->id)->count())
