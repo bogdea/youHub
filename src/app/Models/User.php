@@ -34,4 +34,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\VideoLike::class);
     }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(\App\Models\Subscription::class, 'subscriber_id');
+    }
+
+    public function subscribers()
+    {
+        return $this->hasMany(\App\Models\Subscription::class, 'subscribed_to_id');
+    }
 }

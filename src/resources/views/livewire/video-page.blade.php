@@ -18,10 +18,39 @@
         <h1 class="text-2xl font-semibold">{{ $video->title }}</h1>
     </div>
 
-    <div class="flex justify-between">
-        <p>
-            {{ $video->user->username }}
-        </p>
+    <div class="my-3 flex justify-between">
+        <div class="flex items-center space-x-4">
+            <p>
+                {{ $video->user->username }}
+            </p>
+
+            <!-- subscribe -->
+            @if (Auth::check() &&Auth::user()->subscriptions->where("subscribed_to_id", $video->user->id)->count())
+                <form
+                    method="POST"
+                    action="{{ route("unsubscribe", $video->user) }}"
+                >
+                    @csrf
+                    <button
+                        class="cursor-pointer rounded-full bg-red-500 px-4 py-2 text-white"
+                    >
+                        unsubscribe
+                    </button>
+                </form>
+            @else
+                <form
+                    method="POST"
+                    action="{{ route("subscribe", $video->user) }}"
+                >
+                    @csrf
+                    <button
+                        class="bg-primary cursor-pointer rounded-full px-4 py-2 text-white"
+                    >
+                        subscribe
+                    </button>
+                </form>
+            @endif
+        </div>
 
         <!-- like / dislike buttons -->
         <div class="flex items-center space-x-3">
