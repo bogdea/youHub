@@ -29,4 +29,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function videoLikes()
+    {
+        return $this->hasMany(\App\Models\VideoLike::class);
+    }
 }

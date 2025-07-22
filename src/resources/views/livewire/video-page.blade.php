@@ -16,9 +16,39 @@
     <!-- video info -->
     <div class="mt-4 space-y-2">
         <h1 class="text-2xl font-semibold">{{ $video->title }}</h1>
+    </div>
+
+    <div class="flex justify-between">
         <p>
             {{ $video->user->username }}
         </p>
-        <p class="text-gray-700">{{ $video->description }}</p>
+
+        <!-- like / dislike buttons -->
+        <div class="flex items-center space-x-3">
+            <form method="POST" action="{{ route("video.like", $video) }}">
+                @csrf
+                <button type="submit" class="flex cursor-pointer items-center">
+                    <img
+                        src="{{ asset("images/thumbs-up.svg") }}"
+                        alt="like"
+                        class="mr-1 h-5"
+                    />
+                    {{ $video->likes()->where("is_like", true)->count() }}
+                </button>
+            </form>
+
+            <form method="POST" action="{{ route("video.dislike", $video) }}">
+                @csrf
+                <button type="submit" class="flex cursor-pointer items-center">
+                    <img
+                        src="{{ asset("images/thumbs-down.svg") }}"
+                        alt="dislike"
+                        class="h-5"
+                    />
+                </button>
+            </form>
+        </div>
     </div>
+
+    <p class="text-gray-700">{{ $video->description }}</p>
 </div>
