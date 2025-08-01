@@ -5,10 +5,7 @@
             controls
             class="absolute left-0 top-0 h-full w-full object-contain"
         >
-            <source
-                src="{{ asset("storage/" . $video->video_path) }}"
-                type="video/mp4"
-            />
+            <source src="{{ $video->video_url }}" type="video/mp4" />
             your browser does not support the video tag
         </video>
     </div>
