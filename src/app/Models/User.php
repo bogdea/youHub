@@ -30,6 +30,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function videos()
+    {
+        return $this->hasMany(\App\Models\Video::class);
+    }
+
     public function videoLikes()
     {
         return $this->hasMany(\App\Models\VideoLike::class);

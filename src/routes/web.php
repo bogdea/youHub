@@ -7,6 +7,7 @@ use App\Livewire\VideoPage;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\SubscriptionController;
 use App\Livewire\UploadVideo;
+use App\Livewire\UserProfile;
 
 
 Route::get('/', Home::class);
@@ -21,3 +22,5 @@ Route::post('/subscribe/{user}', [SubscriptionController::class, 'subscribe'])->
 Route::post('/unsubscribe/{user}', [SubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
 
 Route::get('/upload', UploadVideo::class)->name('upload');
+
+Route::get('/user/{username}', UserProfile::class)->name('user.profile');

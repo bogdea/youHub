@@ -13,7 +13,7 @@
             <div class="flex">
                 @livewire("sidebar")
 
-                <div class="flex-1">
+                <div class="flex-1 py-4">
                     {{ $slot }}
                 </div>
             </div>
