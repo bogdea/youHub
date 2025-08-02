@@ -15,7 +15,7 @@
     >
         @if (Auth::check())
             <a
-                href="#"
+                href="{{ url("/user/" . Auth::user()->username) }}"
                 class="block rounded-lg px-4 py-2 text-center hover:bg-gray-100"
             >
                 your channel
