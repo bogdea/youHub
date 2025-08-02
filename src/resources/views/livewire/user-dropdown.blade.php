@@ -11,7 +11,7 @@
         x-show="open"
         @click.away="open = false"
         x-transition
-        class="absolute right-0 top-12 w-48 space-y-1 rounded-lg border border-gray-300 p-1 shadow-lg"
+        class="absolute right-0 top-12 w-48 space-y-1 rounded-lg border border-gray-300 bg-white p-1 shadow-lg"
     >
         @if (Auth::check())
             <a
